@@ -9,9 +9,10 @@
     "node": ">=22"
   },
   "scripts": {
-    "studio": "remotion studio src/index.ts",
+    "studio": "node tools/studio.mjs",
     "check": "tsc --noEmit",
     "audio": "node tools/generate-audio.mjs",
+    "prepare:tour": "node tools/prepare-card-tour.mjs",
     "render": "node tools/render.mjs",
     "verify": "node tools/verify.mjs"
   },

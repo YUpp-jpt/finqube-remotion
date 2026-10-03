@@ -9,3 +9,4 @@ renders/
 *.tsbuildinfo
 .DS_Store
 Thumbs.db
+/public/card-tour-source.mp4

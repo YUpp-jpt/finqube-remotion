@@ -3,6 +3,7 @@ import {access, mkdir} from 'node:fs/promises';
 import {createRequire} from 'node:module';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {prepareCardTour} from './prepare-card-tour.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -58,6 +59,9 @@ try {
     if (!await exists(soundtrack)) {
       await run([path.join(root, 'tools', 'generate-audio.mjs')]);
     }
+
+    const browserOptions = extra.filter(argument => /^--(browser-executable|gl|log|chromium-flags)=/.test(argument));
+    await prepareCardTour(browserOptions);
 
     await run([
       cli,
