@@ -49,7 +49,7 @@ const opening: Camera = {x: 15, y: -20, z: 1400, pitch: 2, yaw: 2, roll: 0};
 const destinations: {from: number; to: number; pose: Camera; bank: Angles}[] = [
   {from: 32, to: 76, pose: {x: 210, y: -518, z: 940, pitch: 2, yaw: -2, roll: -5}, bank: {pitch: 3, yaw: -5, roll: -4}},
   {from: 112, to: 151, pose: {x: 260, y: 450, z: 680, pitch: -3, yaw: -3, roll: 5}, bank: {pitch: -4, yaw: 8, roll: 4}},
-  {from: 180, to: 219, pose: {x: -463, y: 420, z: 880, pitch: -3, yaw: 2, roll: -2}, bank: {pitch: 3, yaw: -5, roll: -4}},
+  {from: 180, to: 219, pose: {x: -450, y: 412, z: 880, pitch: -3, yaw: 2, roll: -2}, bank: {pitch: 3, yaw: -5, roll: -4}},
   {from: 245, to: 296, pose: {x: 0, y: 0, z: 1630, pitch: 0, yaw: 0, roll: 0}, bank: {pitch: 2, yaw: 5, roll: 2}},
 ];
 const cameraKeys = ['x', 'y', 'z', 'pitch', 'yaw', 'roll'] as const;
@@ -190,8 +190,6 @@ export const CardTourWorld: React.FC = () => {
   const frame = useCurrentFrame();
   const camera = cameraAt(frame);
   const ordered = planes.map(plane => ({plane, geometry: planeAt(plane, frame)})).sort((a, b) => project(b.geometry.position, camera).depth - project(a.geometry.position, camera).depth);
-  const dash = smoother((frame - 28) / 33);
-  const dashFade = 1 - smoother((frame - 62) / 12);
   return <AbsoluteFill style={{overflow: 'hidden'}}>
     <svg width="0" height="0" style={{position: 'absolute'}} aria-hidden="true"><defs>
       {planes.map(plane => {
@@ -212,7 +210,6 @@ export const CardTourWorld: React.FC = () => {
         </React.Fragment>;
       })}
       {frame >= 274 && <div style={{position: 'absolute', left: 0, top: 0, width: 900, height: 246, display: 'flex', alignItems: 'center', transformOrigin: '0 0', transform: planeMatrix({x: -10, y: -28, z: 100}, {pitch: 0, yaw: 0, roll: 0}, 900, 246, camera)}}><Words text={'Understand\nBusiness'} frame={frame} start={274} end={400} size={88}/></div>}
-      {frame < 74 && <div style={{position: 'absolute', left: lerp(92 + frame * 4.2, 568, dash), top: lerp(400 + frame * 2.2, 243, dash), width: lerp(82, 58, dash), height: lerp(25, 17, dash), borderRadius: 30, opacity: dashFade, background: '#e1ff58', boxShadow: '0 0 13px #efff8f, 0 0 34px #c6ff4cc0', transform: `rotate(${lerp(15 + frame * 0.35, 29, dash)}deg)`}}/>}
     </AbsoluteFill>
   </AbsoluteFill>;
 };
